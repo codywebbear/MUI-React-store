@@ -6,25 +6,17 @@ import {
    } from '@mui/material';
 import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
 import AutoAwesomeMosaicRoundedIcon from '@mui/icons-material/AutoAwesomeMosaicRounded';
-import React, {useState, useEffect}from 'react';
+import React, {useState}from 'react';
+import {useAllProductsContext} from '../context/allProducts'
 import ProductComponent from './ProductComponent';   
 import Masonry from '@mui/lab/Masonry';
 
 function ListComponent() {
 
+    const products = useAllProductsContext()  
+    const [isMasonry, setIsMasonry]= useState(false)
 
-    const [products, setProducts] = useState([])
-    const [isMasonry, setIsMasonry]= useState(true)
-
-    useEffect(()=>{
-        const fetchData = async()=>{
-            const data = await fetch('https://fakestoreapi.com/products?limit=20')
-            const getData = await data.json()
-            setProducts(getData)
-        }
-        fetchData()
-       
-    },[])
+   
 
     const handleClick = ()=>{
         setIsMasonry(!isMasonry)
