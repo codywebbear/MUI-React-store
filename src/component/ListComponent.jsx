@@ -21,7 +21,7 @@ function ListComponent() {
     const handleClick = ()=>{
         setIsMasonry(!isMasonry)
     }
-
+    console.log(products)
   return (
     <Container >
         <IconButton  sx={{position:'absolute',top:'80px', right:'2vw'}} onClick={handleClick}>
@@ -32,7 +32,7 @@ function ListComponent() {
         {!isMasonry 
         ?(
         <Grid mt={10} container columns={12} spacing={2} wrap="wrap">
-            {
+            {   
                products.map((item,index)=>{
                     return <ProductComponent key={index} product={item} xs={12} md={4} />
                 })
@@ -42,8 +42,8 @@ function ListComponent() {
             <Box mt={10} maxWidth={'90VW'} minHeight={10}>
                 <Masonry
                 columns={3}
-                spacing={1}
-                         
+                spacing={1}  
+
             >
                 {
                products.map((item,index)=>{

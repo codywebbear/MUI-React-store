@@ -13,15 +13,23 @@ import {
     Divider } from '@mui/material';
 import { DensitySmall, Search } from '@mui/icons-material';
 import React,{useState} from 'react';
-
+import {useFilterContext} from '../context/allProducts'
 
 function NavBar() {
 
     const [drawer, setDrawer] = useState(false) 
 
+    const setFilter = useFilterContext()
+
     const toggleDrawer =(bool)=>{
         setDrawer(bool)
     }
+
+    const handleFilter = (bool, ev)=>{
+        setFilter(ev.target.innerText)
+        toggleDrawer(bool)
+    }
+
 
   return (
       <Box sx={{flexGrow:1}}>
@@ -65,10 +73,10 @@ function NavBar() {
           <Drawer
             anchor={'left'}
             open={drawer}
-            onClose={()=>toggleDrawer(false)}
+            onClose={(ev)=>toggleDrawer(false,ev)}
           >
             <Box
-                onClick={()=>toggleDrawer(false)}
+                onClick={(ev)=>handleFilter(false,ev)}
             >
             <List
                 
@@ -110,3 +118,5 @@ function NavBar() {
 }
 
 export default NavBar;
+
+
