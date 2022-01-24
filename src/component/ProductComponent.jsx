@@ -34,26 +34,39 @@ function ProductComponent({product,xs,md}) {
                                         }}>
                                     <CardHeader 
                                         titleTypographyProps={{variant:'h6'}}                                    
-                                        title={product.title}
-                                        subheader={`$${product.price}`} />   
+                                        title={
+                                            <Typography
+                                                variant='h6'
+                                            >
+                                                {product.title}
+                                            </Typography>
+                                        }
+                                        subheader={
+                                            <Typography
+                                                mt={2}
+                                                color={'#5c6b63'}
+                                            >{`$${product.price}`}</Typography>} 
+                                        
+                                        sx={{width:'100%'}}
+                                        />   
+                                        
                                     <CardContent
                                         sx={{
-                                            height: '40vh'
+                                            height: '50vh'
                                         }}
                                     >
                                     <CardMedia 
                                         component="img"
                                         image={product.image}
                                         sx={{
-                                            height:'35vh',
-                                            width:'auto',
-                                            maxwidth:'100%'                                              
+                                            maxWidth:'100%',
+                                            maxHeight:'90%'                                             
                                         }}
                                     />
                                     </CardContent>
                                     
                                     {
-                                        showInfo && <CardContent>
+                                        showInfo && <CardContent >
                                                         <Typography component='p' variant='body2'>
                                                             {product.description}
                                                         </Typography>

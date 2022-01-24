@@ -16,24 +16,23 @@ const FetchAllData = (props)=>{
     const [products,setProducts] = useState([])
     const [filter,setFilter] = useState('')
 
-const plus = ()=>{
-    switch(filter){
-        case 'Jewelery':
-            return 'category/jewelery'
-        case 'Electronics':
-            return 'category/electronics'
-        case "Men's Clothing":
-            return "category/men's clothing"
-        case "Women's Clothing":
-            return "category/women's clothing"
-        default:
-            return ''
-    }
-}
-
 
 
     useEffect(()=>{
+        const plus = ()=>{
+            switch(filter){
+                case 'Jewelery':
+                    return 'category/jewelery'
+                case 'Electronics':
+                    return 'category/electronics'
+                case "Men's Clothing":
+                    return "category/men's clothing"
+                case "Women's Clothing":
+                    return "category/women's clothing"
+                default:
+                    return ''
+            }
+        }
         const fetchData = async()=>{
             const url = `https://fakestoreapi.com/products/${plus()}`
             console.log(url)

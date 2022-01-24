@@ -11,15 +11,19 @@ import {
     ListItem, 
     ListItemText, 
     Divider } from '@mui/material';
+import ShoppingCartTwoToneIcon from '@mui/icons-material/ShoppingCartTwoTone';
+import LogoutTwoToneIcon from '@mui/icons-material/LogoutTwoTone';
 import { DensitySmall, Search } from '@mui/icons-material';
 import React,{useState} from 'react';
 import {useFilterContext} from '../context/allProducts'
+import {useLoginContext} from '../context/login'
 
 function NavBar() {
 
     const [drawer, setDrawer] = useState(false) 
 
     const setFilter = useFilterContext()
+    const {isLogged, setIsLogged} =useLoginContext()
 
     const toggleDrawer =(bool)=>{
         setDrawer(bool)
@@ -30,6 +34,9 @@ function NavBar() {
         toggleDrawer(bool)
     }
 
+    const handleLoginClick=()=>{
+        setIsLogged(!isLogged)
+    }
 
   return (
       <Box sx={{flexGrow:1}}>
@@ -66,7 +73,28 @@ function NavBar() {
                         </Box>
                         <InputBase placeholder='Search...'></InputBase>
                     </Box>
-                    <Button >Login</Button>
+                    {
+                        !isLogged ?(
+                            <Button 
+                                onClick={handleLoginClick}
+                            >Login</Button>
+                        ):(
+                            <Box>
+                                <IconButton
+                                    color={'primary'}
+                                >
+                                    <ShoppingCartTwoToneIcon />
+                                </IconButton>
+                                <IconButton
+                                    color={'primary'}
+                                    onClick={handleLoginClick}
+                                >
+                                    <LogoutTwoToneIcon/>
+                                </IconButton>
+                            </Box>
+                        )
+                    }
+                    
                 </Toolbar>
            
           </AppBar>
@@ -105,6 +133,11 @@ function NavBar() {
 
                 <ListItem button sx={{width:'20vw'}}>
                     <ListItemText primary={"Women's Clothing"} sx={{textAlign:'right',paddingRight:'15%'}}  />
+                </ListItem>
+                <Divider />
+
+                <ListItem button sx={{width:'20vw'}}>
+                    <ListItemText primary={"Show All"} sx={{textAlign:'right',paddingRight:'15%'}}  />
                 </ListItem>
                 <Divider />
             </List>
