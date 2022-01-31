@@ -7,16 +7,20 @@ import {useCartContext} from '../context/cart'
 function CartItem({item}) {
     
     const {cart,setCart} = useCartContext()
+    
 
     const deleteItem =()=>{
+         
         const index = cart.findIndex(product=>product===item)
-        const newCart = [...cart].splice(0,index).concat([...cart].splice(index+1,cart.length))
-        setCart(newCart)
+        item.quantity === 1 ? setCart([...cart].splice(0,index).concat([...cart].splice(index+1,cart.length)))
+                            :setCart([...cart].splice(0,index)
+                                .concat({...cart[index],quantity:parseInt(item.quantity-1)})
+                                .concat([...cart].splice(index+1,cart.length)))
     }
 
   return <ListItem sx={{display:'flex', justifyContent:'center', alignItems:'center'}} >
-                <ListItemText sx={{width:'30%'}}>{item.title}</ListItemText>
-                <ListItemText sx={{width:'30%',textAlign:'left'}}>{`$${item.price}`}</ListItemText>
+                <ListItemText sx={{width:'30%'}}>{`${item.prod.title} x ${item.quantity}`}</ListItemText>
+                <ListItemText sx={{width:'30%',textAlign:'left'}}>{`$${item.prod.price*item.quantity}`}</ListItemText>
                 <IconButton
                     onClick={deleteItem}
                     sx={{marginRight:'10%'}}
