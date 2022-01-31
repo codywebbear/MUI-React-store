@@ -10,21 +10,27 @@ import {
     List, 
     ListItem, 
     ListItemText, 
-    Divider } from '@mui/material';
+    Divider, 
+    Badge,
+    Tooltip} from '@mui/material';
 import ShoppingCartTwoToneIcon from '@mui/icons-material/ShoppingCartTwoTone';
 import LogoutTwoToneIcon from '@mui/icons-material/LogoutTwoTone';
 import { DensitySmall, Search } from '@mui/icons-material';
 import React,{useState} from 'react';
 import {useFilterContext} from '../context/allProducts'
 import {useLoginContext} from '../context/login'
+import {useShowCartContext,useCartContext} from '../context/cart'
+import CartComponent from './CartComponent';
 
 function NavBar() {
 
-    const [drawer, setDrawer] = useState(false) 
+    const [drawer, setDrawer] = useState(false)
 
     const setFilter = useFilterContext()
     const {isLogged, setIsLogged} =useLoginContext()
 
+    const {showCart,setShowCart} = useShowCartContext()
+    const {cart} = useCartContext()
     const toggleDrawer =(bool)=>{
         setDrawer(bool)
     }
@@ -36,6 +42,10 @@ function NavBar() {
 
     const handleLoginClick=()=>{
         setIsLogged(!isLogged)
+    }
+
+    const handleCartOpener = ()=>{
+         setShowCart(!showCart)
     }
 
   return (
@@ -80,17 +90,24 @@ function NavBar() {
                             >Login</Button>
                         ):(
                             <Box>
+                                <Tooltip title={'Open Cart'}>
                                 <IconButton
                                     color={'primary'}
-                                >
+                                    onClick={handleCartOpener}
+                                >   
+                                    <Badge badgeContent={cart.length}>
                                     <ShoppingCartTwoToneIcon />
+                                    </Badge>
                                 </IconButton>
+                                </Tooltip>
+                                <Tooltip title={'Logout'}>
                                 <IconButton
                                     color={'primary'}
                                     onClick={handleLoginClick}
                                 >
                                     <LogoutTwoToneIcon/>
                                 </IconButton>
+                                </Tooltip>
                             </Box>
                         )
                     }
@@ -145,6 +162,7 @@ function NavBar() {
               
               
           </Drawer>
+         <CartComponent/>
       </Box>
       
   );

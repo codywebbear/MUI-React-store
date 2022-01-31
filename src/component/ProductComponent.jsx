@@ -1,24 +1,37 @@
 import React,{useState} from 'react';
 import { 
     Grid, 
-    Card, 
+    Card,
+    Box,
     Typography, 
     CardHeader, 
     CardMedia, 
     CardContent, 
-    IconButton} from '@mui/material';
-import { ExpandMore, } from '@mui/icons-material';
-
-
+    IconButton,
+    Tooltip} from '@mui/material';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { useCartContext } from '../context/cart'
 
 
 function ProductComponent({product,xs,md}) {
 
     const [showInfo, setShowInfo] = useState(false)
     
+    const {cart,setCart} = useCartContext()
+
     const handleMoreInfoClick = ()=>{
         setShowInfo(!showInfo)
     }
+
+    const handleAddCart = ()=>{
+        setCart([
+            ...cart,
+            product
+        ])
+        console.log(cart)
+    }
+
 
   return (
                         <Grid item
@@ -40,16 +53,39 @@ function ProductComponent({product,xs,md}) {
                                             >
                                                 {product.title}
                                             </Typography>
-                                        }
-                                        subheader={
-                                            <Typography
-                                                mt={2}
-                                                color={'#5c6b63'}
-                                            >{`$${product.price}`}</Typography>} 
-                                        
+                                        }                                                                            
                                         sx={{width:'100%'}}
-                                        />   
-                                        
+                                        />
+                                        <Box
+                                            sx={{
+                                                display: 'flex',
+                                                flexDirection:'row',
+                                                justifyContent:'left',
+                                                alignItems:'baseline',
+                                                width:'100%',
+                                                }}
+                                        >
+                                            <Typography
+                                                    ml={2}
+                                                    mr={2}
+                                                    mt={2}
+                                                    color={'#5c6b63'}
+                                                    textAlign={'center'}
+                                                >{`$${product.price}`}
+                                            </Typography>
+                                            <Tooltip title={'Add to Cart'}>
+                                            <IconButton
+                                            color={'primary'}
+                                            onClick={handleAddCart}
+                                            sx={{
+                                                position:'relative',
+                                                top:'5px'
+                                            }}
+                                            >
+                                                <AddShoppingCartIcon />
+                                            </IconButton>
+                                            </Tooltip>
+                                        </Box>                                                                     
                                     <CardContent
                                         sx={{
                                             height: '50vh'
@@ -72,7 +108,7 @@ function ProductComponent({product,xs,md}) {
                                                         </Typography>
                                                     </CardContent>
                                     }
-                                    
+                                   
                                     <IconButton
                                         expand={'expanded'}
                                         onClick={handleMoreInfoClick}
@@ -82,6 +118,7 @@ function ProductComponent({product,xs,md}) {
                                     >
                                         <ExpandMore />
                                     </IconButton>
+                                    
                                 </Card>
                             </Grid>)
 }
